@@ -1,5 +1,18 @@
 <resources>
     <string name="app_name">Hash Generator</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--  Navigation string resources  -->
+    <string name="label_home_fragment">Home</string>
+    <string name="label_success_fragment">Success</string>
+
+    <!--  HomeFragment string resources  -->
+    <string name="title_home_fragment">Hash Generator</string>
+    <string name="hint_edit_person_name">Text here..</string>
+    <string name="btn_generator">Generate</string>
+    <string name="title_menu_clear">Clear</string>
+    <string-array name="hash_algorithms">
+        <item>SHA-256</item>
+        <item>SHA-512</item>
+        <item>MD5</item>
+    </string-array>
 </resources>
