@@ -40,6 +40,10 @@
             app:startIconDrawable="@drawable/ic_look"
             app:startIconTint="@color/teal_200"
             app:endIconTint="@color/teal_200"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title_home_fragment">
@@ -51,7 +55,7 @@
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
                 android:inputType="none"
-                android:text="SHA-256"
+                android:text="@string/default_text_autocomplete"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 tools:ignore="LabelFor" />
@@ -67,7 +71,7 @@
             android:ems="10"
             android:inputType="textMultiLine"
             android:maxLines="6"
-            android:background="@color/dark_blue"
+            android:background="@drawable/bg_edit_text"
             android:textColorHint="@color/gray"
             android:gravity="start|top"
             android:hint="@string/hint_edit_person_name"
@@ -79,7 +83,7 @@
         <Button
             android:id="@+id/btn_generator"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="55dp"
             android:layout_marginBottom="16dp"
             android:text="@string/btn_generator"
             android:textSize="16sp"

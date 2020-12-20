@@ -15,4 +15,5 @@
         <item>SHA-512</item>
         <item>MD5</item>
     </string-array>
+    <string name="default_text_autocomplete">SHA-256</string>
 </resources>
