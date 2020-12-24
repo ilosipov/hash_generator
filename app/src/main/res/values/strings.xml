@@ -16,4 +16,6 @@
         <item>MD5</item>
     </string-array>
     <string name="default_text_autocomplete">SHA-256</string>
+    <string name="msg_snack_bar_clear">Cleared</string>
+    <string name="msg_snack_bar_empty">Field empty</string>
 </resources>
