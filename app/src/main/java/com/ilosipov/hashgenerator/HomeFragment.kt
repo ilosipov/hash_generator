@@ -6,8 +6,10 @@ import android.view.*
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.ilosipov.hashgenerator.databinding.FragmentHomeBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -26,6 +28,7 @@ class HomeFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentHomeBinding
+    private val homeViewModel: HomeViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -35,18 +38,41 @@ class HomeFragment : Fragment() {
             R.layout.fragment_home, container, false)
         setHasOptionsMenu(true)
 
-        val hasAlgorithms = resources.getStringArray(R.array.hash_algorithms)
-        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.drop_down_item, hasAlgorithms)
-        binding.autoCompleteTextView.setAdapter(arrayAdapter)
+        binding.btnGenerator.setOnClickListener { onGenerateClicked() }
 
-        binding.btnGenerator.setOnClickListener {
+        return binding.root
+    }
+
+    private fun onGenerateClicked() {
+        if (binding.editPersonName.text.isEmpty()) {
+            showSnackBar(getString(R.string.msg_snack_bar_empty))
+        } else {
             lifecycleScope.launch {
                 applyAnimations()
+                getHashData()
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSuccessFragment())
             }
         }
+    }
 
-        return binding.root
+    private fun getHashData() : String {
+        val algorithm = binding.autoCompleteTextView.text.toString()
+        val plainText = binding.editPersonName.text.toString()
+        return homeViewModel.getHash(plainText, algorithm)
+    }
+
+    private fun showSnackBar(msg: String) {
+        Snackbar.make(binding.rootLayout, msg, Snackbar.LENGTH_SHORT).apply {
+            setAction(getString(android.R.string.ok)) {}
+            show()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val hasAlgorithms = resources.getStringArray(R.array.hash_algorithms)
+        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.drop_down_item, hasAlgorithms)
+        binding.autoCompleteTextView.setAdapter(arrayAdapter)
     }
 
     private suspend fun applyAnimations() {
@@ -80,5 +106,14 @@ class HomeFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.home_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.clear_menu) {
+            binding.editPersonName.text.clear()
+            showSnackBar(getString(R.string.msg_snack_bar_empty))
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
