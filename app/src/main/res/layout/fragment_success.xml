@@ -10,6 +10,45 @@
         android:background="@color/dark"
         tools:context=".SuccessFragment">
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/hash_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="32dp"
+            android:textSize="22sp"
+            android:textColor="@color/teal_200"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <Button
+            android:id="@+id/btn_copy_hash"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:text="@string/btn_copy"
+            android:backgroundTint="@color/blue"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:paddingEnd="140dp"
+            android:paddingStart="140dp"
+            android:layout_margin="16dp"
+            app:icon="@drawable/ic_copy"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <include
+            android:id="@+id/include"
+            layout="@layout/copied_message"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

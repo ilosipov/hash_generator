@@ -32,7 +32,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         Log.i(TAG, "onCreateView: initialization HomeFragment.")
         binding = DataBindingUtil.inflate(LayoutInflater.from(requireContext()),
             R.layout.fragment_home, container, false)
@@ -49,10 +49,14 @@ class HomeFragment : Fragment() {
         } else {
             lifecycleScope.launch {
                 applyAnimations()
-                getHashData()
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSuccessFragment())
+                navigationToSuccess(getHashData())
             }
         }
+    }
+
+    private fun navigationToSuccess(hash: String) {
+        val directions = HomeFragmentDirections.actionHomeFragmentToSuccessFragment(hash)
+        findNavController().navigate(directions)
     }
 
     private fun getHashData() : String {

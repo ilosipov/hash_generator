@@ -97,8 +97,8 @@
 
         <View
             android:id="@+id/success_background"
-            android:layout_width="1dp"
-            android:layout_height="1dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:alpha="0"
             android:background="@color/teal_200"
             app:layout_constraintTop_toTopOf="parent"

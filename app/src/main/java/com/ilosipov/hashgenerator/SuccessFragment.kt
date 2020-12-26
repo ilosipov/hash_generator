@@ -1,59 +1,72 @@
 package com.ilosipov.hashgenerator
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
+import com.ilosipov.hashgenerator.databinding.FragmentSuccessBinding
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
- * A simple [Fragment] subclass.
- * Use the [SuccessFragment.newInstance] factory method to
- * create an instance of this fragment.
+ * Class SuccessFragment
+ * @author Ilya Osipov (mailto:il.osipov.gm@gmail.com)
+ * @since 26.12.2020
+ * @version $Id$
  */
-class SuccessFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+class SuccessFragment : Fragment() {
+
+    companion object {
+        private const val TAG = "SuccessFragment"
+    }
+
+    private lateinit var binding: FragmentSuccessBinding
+    private val args: SuccessFragmentArgs by navArgs()
+
+    override fun onCreateView(inflater: LayoutInflater,
+                              container: ViewGroup?,
+                              savedInstanceState: Bundle?): View {
+        Log.i(TAG, "onCreateView: initialization SuccessFragment.")
+        binding = DataBindingUtil.inflate(LayoutInflater.from(requireContext()),
+            R.layout.fragment_success, container, false)
+
+        Log.i(TAG, "onCreateView: hash = ${args.hash}")
+        binding.apply {
+            hashTextView.text = args.hash
+            btnCopyHash.setOnClickListener { onCopyClicked() }
+        }
+        return binding.root
+    }
+
+    private fun onCopyClicked() {
+        lifecycleScope.launch {
+            val clipboardManager = requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipData = ClipData.newPlainText("Encrypted Text", args.hash)
+            clipboardManager.setPrimaryClip(clipData)
+            applyAnimations()
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_success, container, false)
-    }
+    private suspend fun applyAnimations() {
+        binding.include.apply {
+            messageBackground.animate().translationY(100F).duration = 200L
+            messageTextView.animate().translationY(100F).duration = 200L
+        }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SuccessFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SuccessFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        delay(2000L)
+
+        binding.include.apply {
+            messageBackground.animate().translationY(-100F).duration = 400L
+            messageTextView.animate().translationY(-100F).duration = 400L
+        }
     }
 }
