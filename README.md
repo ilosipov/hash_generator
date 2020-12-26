@@ -10,7 +10,8 @@ The app will be simple, but it will also have some beautiful animations as well.
 
 Preview
 -------
-![sample](./preview/preview_first_hash_generator.png)
+![sample](./preview/first_screen_app_hash_generator.png)
+![sample](./preview/second_screen_app_hash_generator.png)
 
 
 Author: Ilya Osipov 
