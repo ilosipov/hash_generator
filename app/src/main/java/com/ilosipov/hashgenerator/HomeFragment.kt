@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.ArrayAdapter
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
@@ -68,6 +69,7 @@ class HomeFragment : Fragment() {
     private fun showSnackBar(msg: String) {
         Snackbar.make(binding.rootLayout, msg, Snackbar.LENGTH_SHORT).apply {
             setAction(getString(android.R.string.ok)) {}
+            setActionTextColor(ContextCompat.getColor(requireContext(), R.color.blue))
             show()
         }
     }
